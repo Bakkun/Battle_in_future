@@ -9,7 +9,7 @@ Jump: W<br>
 Left: A<br>
 Right: D<br>
 Punch: H<br>
-Shoot: J<br> Dark Adventurer (on the screen on the right):
+Shoot: J<br><br>Dark Adventurer (on the screen on the right):
 Jump: Arrow UP<br>
 Left: Arrow LEFT<br>
 Right: Arrow RIGHT<br>
