@@ -1,12 +1,12 @@
 class Player {
-  constructor(game, xCoord, yCoord, name) {
+  constructor (game, xCoord, yCoord, name) {
     this.game = game;
     this.xCoord = xCoord;
     this.yCoord = yCoord;
     this.name = name;
-  }
+  };
 
-  create() {
+  create () {
     this.player = this.game.add.sprite(this.xCoord, this.yCoord, this.name);
     this.player.health = 10;
     this.player.scale.setTo(2);
@@ -38,13 +38,13 @@ class Player {
 
     punchLeft.onComplete.add(() => {
       this.player.facing = 'left';
-      for(let i = 0; i < this.game.players.length; i++) {
-        for(let k = 0; k < this.game.players.length; k++) {
-          if(i != k) {
+      for (let i = 0; i < this.game.players.length; i++) {
+        for (let k = 0; k < this.game.players.length; k++) {
+          if (i != k) {
             this.game.DamageCollision(this.player, this.game.players[k].player);
-          }
-        }
-      }
+          };
+        };
+      };
       this.player.animations.play('stayLeft');
     }, this);
 
@@ -67,13 +67,13 @@ class Player {
       this.BulletFly();
       this.player.animations.play('stayLeft');
     }, this);
-  }
+  };
 
-  update() {
+  update () {
     this.checkWalking();
   }
 
-  bindKeys({ left, right, jump, punch, shoot }) {
+  bindKeys ({ left, right, jump, punch, shoot }) {
     this.keys = this.game.phaser.input.keyboard.addKeys({ left, right, jump, punch, shoot });
 
     ['left', 'right'].forEach(key => {
@@ -83,27 +83,27 @@ class Player {
           this.player.animations.play('stayLeft');
         } else {
           this.player.animations.play('stayRight');
-        }
-      })
-    })
+        };
+      });
+    });
 
     this.keys.jump.onDown.add(() => this.Jump());
     this.keys.punch.onDown.add(() => this.Punch());
     this.keys.shoot.onDown.add(() => this.Shoot());
-  }
+  };
 
-  checkWalking() {
+  checkWalking () {
     this.player.body.velocity.x = 0
     if (!this.keys) return;
     if (this.keys.left.isDown) {
       this.Walk('left');
     } else if (this.keys.right.isDown) {
       this.Walk('right');
-    }
-  }
+    };
+  };
 
 
-  Walk(facing) {
+  Walk (facing) {
     this.facing = facing;
     switch (facing) {
       case 'left':
@@ -114,28 +114,28 @@ class Player {
         this.player.animations.play('runRight');
         this.player.body.velocity.x = 150;
         break;
-    }
-  }
+    };
+  };
 
-  Jump() {
+  Jump () {
     if (!this.player.body.touching.down) return;
     this.player.animations.stop();
     if (this.facing === 'left') this.player.animations.play('jumpLeft');
     else if (this.facing === 'right') this.player.animations.play('jumpRight');
     this.player.body.velocity.y = -500;
-  }
+  };
 
-  Punch() {
+  Punch () {
     if(this.facing === 'left') this.player.animations.play('punchLeft');
     if(this.facing === 'right') this.player.animations.play('punchRight');
-  }
+  };
 
-  Shoot() {
+  Shoot () {
     if(this.facing === 'left') this.player.animations.play('shootLeft');
     if(this.facing === 'right') this.player.animations.play('shootRight');
-  }
+  };
 
-  BulletFly() {
+  BulletFly () {
     let bullet = new Bullet(this.game.phaser);
     bullet.create();
     bullet.start(
@@ -143,9 +143,9 @@ class Player {
       this.player.body.y + this.player.body.height / 2 - 10,
       this.facing);
     this.game.bullets.push(bullet);
-  }
+  };
 
-  IsDead() {
+  IsDead () {
     let style = { font: "65px Arial", fill: "black", align: "center" };
     if ((this.player.position.x <= 325 || this.player.position.x >= 1380) && this.player.position.y >= 722){
       let textFell = this.game.phaser.add.text(this.game.phaser.world.centerX, 100, this.myName + " fell", style);
@@ -153,14 +153,13 @@ class Player {
       this.player.kill();
       this.game.phaser.input.enabled = false;
       return true;
-    }
+    };
     if(this.player.health <= 0) {
       this.player.kill();
       let textDead = this.game.phaser.add.text(this.game.phaser.world.centerX, 100, this.myName + " is dead", style);
       textDead.anchor.set(0.5);
       this.game.phaser.input.enabled = false;
       return true;
-    }
-  }
-
+    };
+  };
 }

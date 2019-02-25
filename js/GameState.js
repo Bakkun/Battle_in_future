@@ -13,21 +13,21 @@ class GameState {
     this.platforms.push(new Platform(this, 350, 420, 1.3, 0.08));
 
     this.bullets = [];
-  }
+  };
 
-  preload() {
+  preload () {
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
     this.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
   }
 
-  create() {
+  create () {
     this.phaser.add.tileSprite(0, 0, 1920, 800, 'back');
     this.phaser.physics.startSystem(Phaser.Physics.ARCADE);
     this.players.forEach(player => player.create());
     this.platforms.forEach(platform => platform.create());
 
-    this.players[0].myName = 'Light Adventurer';
-    this.players[1].myName = 'Dark Adventurer';
+    this.players[0].myName = "Light Adventurer";
+    this.players[1].myName = "Dark Adventurer";
 
     this.players[0].bindKeys({
       left: Phaser.KeyCode.A,
@@ -44,70 +44,73 @@ class GameState {
       punch: Phaser.KeyCode.NUMPAD_1,
       shoot: Phaser.KeyCode.NUMPAD_2
     });
+  };
 
-  }
-
-  update() {
+  update () {
     this.players.forEach(player => player.update());
 
-    for(let i = 0; i < this.players.length; i++) {
-      for(let k = i + 1; k < this.players.length; k++) {
+    for (let i = 0; i < this.players.length; i++) {
+      for (let k = i + 1; k < this.players.length; k++) {
         this.phaser.physics.arcade.collide(this.players[i].player, this.players[k].player);
-      }
+      };
 
-      for(let k = 0; k < this.platforms.length; k++) {
+      for (let k = 0; k < this.platforms.length; k++) {
         this.phaser.physics.arcade.collide(this.players[i].player, this.platforms[k].platform);
-      }
+      };
 
-      for(let k = 0; k < this.bullets.length; k++) {
-        this.phaser.physics.arcade.overlap(this.bullets[k].bullet, this.players[i].player, this.checkBulletCollisionPlayer, null, { bulletId: k, bullets: this.bullets });
-      }
-    }
+      for (let k = 0; k < this.bullets.length; k++) {
+        this.phaser.physics.arcade.overlap(this.bullets[k].bullet, this.players[i].player, this.checkBulletCollisionPlayer, null,
+          { bulletId: k, bullets: this.bullets });
+      };
+    };
 
-    for(let i = 0; i < this.platforms.length; i++) {
-      for(let k = 0; k < this.bullets.length; k++) {
-        this.phaser.physics.arcade.overlap(this.bullets[k].bullet, this.platforms[i].platform, this.checkBulletCollisionPlatform, null, { bulletId: k, bullets: this.bullets });
-      }
-    }
+    for (let i = 0; i < this.platforms.length; i++) {
+      for (let k = 0; k < this.bullets.length; k++) {
+        this.phaser.physics.arcade.overlap(this.bullets[k].bullet, this.platforms[i].platform, this.checkBulletCollisionPlatform, null,
+          { bulletId: k, bullets: this.bullets });
+      };
+    };
 
-    if(this.players[0].IsDead() === true || this.players[1].IsDead() === true) {
-      this.game.time.events.add(Phaser.Timer.SECOND * 2, this.OpenMenu, this);
-    }
-  }
+    if (this.players[0].IsDead() === true ||
+        this.players[1].IsDead() === true) {
+          this.game.time.events.add(Phaser.Timer.SECOND * 2, this.openMenu, this);
+    };
+  };
 
-  OpenMenu() {
+  openMenu () {
     this.game.camera.fade('#000000', 2000);
-    this.game.camera.onFadeComplete.add(this.FadeComplete, this);
-  }
+    this.game.camera.onFadeComplete.add(this.fadeComplete, this);
+  };
 
-  FadeComplete() {
+  fadeComplete () {
     this.game.state.start("MenuState", true, false);
-  }
+  };
 
-  checkBulletCollisionPlayer(bullet, player) {
+  checkBulletCollisionPlayer (bullet, player) {
     bullet.kill();
     this.bullets.splice(this.bulletId, 1);
     player.health -= 2;
-  }
+  };
 
-  checkBulletCollisionPlatform(bullet, platform) {
+  checkBulletCollisionPlatform (bullet) {
     bullet.kill();
     this.bullets.splice(this.bulletId, 1);
-  }
+  };
 
-  Distancia(player1, player2) {
+  distancia (player1, player2) {
     return Phaser.Math.distance(player1.x, player1.y, player2.x, player2.y);
-  }
-
-  DamageCollision(hittingPlayer, damagingPlayer) {
-    if(hittingPlayer.facing === 'left' && hittingPlayer.position.x > damagingPlayer.position.x && this.Distancia(hittingPlayer, damagingPlayer) < 50) {
-      console.log("hiitng: " + hittingPlayer.position.x + "\ndamaging: " + damagingPlayer.position.x + "\nfacing: " + hittingPlayer.facing);
-      damagingPlayer.health -= 2;
-    }
-    if(hittingPlayer.facing === 'right' && hittingPlayer.position.x < damagingPlayer.position.x && this.Distancia(hittingPlayer, damagingPlayer) < 50) {
-      console.log("hiitng: " + hittingPlayer.position.x + "\ndamaging: " + damagingPlayer.position.x + "\nfacing: " + hittingPlayer.facing);
-      damagingPlayer.health -= 2;
-    }
-  }
-
+  };
+  
+  damageCollision (hittingPlayer, damagingPlayer) {
+    if (hittingPlayer.facing === 'left' &&
+       hittingPlayer.position.x > damagingPlayer.position.x &&
+       this.distancia(hittingPlayer, damagingPlayer) < 50) {
+        damagingPlayer.health -= 2;
+    };
+    if (hittingPlayer.facing === 'right' &&
+       hittingPlayer.position.x < damagingPlayer.position.x &&
+       this.distancia(hittingPlayer, damagingPlayer) < 50) {
+        damagingPlayer.health -= 2;
+    };
+  };
 }
