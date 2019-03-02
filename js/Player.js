@@ -41,7 +41,7 @@ class Player {
       for (let i = 0; i < this.game.players.length; i++) {
         for (let k = 0; k < this.game.players.length; k++) {
           if (i != k) {
-            this.game.DamageCollision(this.player, this.game.players[k].player);
+            this.game.damageCollision(this.player, this.game.players[k].player);
           };
         };
       };
