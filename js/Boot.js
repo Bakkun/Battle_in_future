@@ -4,6 +4,6 @@ class Boot{
     };
     
     create () {
-        this.phaser.state.start("Load");
+        this.phaser.state.start("LoadFiles");
     };
 }

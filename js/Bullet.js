@@ -1,19 +1,19 @@
 class Bullet {
-  constructor (nachalo) {
-    this.nachalo = nachalo;
+  constructor (phaser) {
+    this.phaser = phaser;
 
     this.bullet;
   };
 
   create () {
-    this.bullet = this.nachalo.add.sprite(0, 0, 'bullet');
+    this.bullet = this.phaser.add.sprite(0, 0, "arrow");
     this.bullet.outOfBoundsKill = true;
     this.bullet.checkWorldBounds = true;
-    this.nachalo.physics.enable(this.bullet, Phaser.Physics.ARCADE);
+    this.phaser.physics.enable(this.bullet, Phaser.Physics.ARCADE);
   };
 
-  start (x, y, dir) {
+  Start (x, y, dir) {
     this.bullet.reset(x, y);
-    this.bullet.body.velocity.x = (dir === 'left') ? -800 : 800;
+    this.bullet.body.velocity.x = (dir === "left") ? -800 : 800;
   };
 }

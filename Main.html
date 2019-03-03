@@ -1,47 +1,49 @@
 <!doctype html>
 <html>
-  <head>
-    <script src="js/phaser.min.js"></script>
-    <script src="js/GameState.js"></script>
-    <script src="js/Player.js"></script>
-		<script src="js/Platform.js"></script>
-		<script src="js/MenuState.js"></script>
-		<script src="js/Bullet.js"></script>
-    <script src="js/Boot.js"></script>
-    <script src="js/Load.js"></script>
-    <style>
-      html {
-        height: 100%;
-      }
-      body {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 100%;
-        background-color: black;
-        overflow: hidden;
-      }
-      canvas {
-        flex: 0;
-      }
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-    	</style>
-		<script>
-        let nachalo = new Phaser.Game(1920, 800, Phaser.CANVAS, "game");
-        nachalo.state.add("GameState", GameState);
-        nachalo.state.add("Player", Player);
-        nachalo.state.add("Platform", Platform);
-        nachalo.state.add("Bullet", Bullet);
-        nachalo.state.add("MenuState", MenuState);
-        nachalo.state.add("Boot", Boot);
-        nachalo.state.add("Load", Load);
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            html {
+                height: 100%;
+            }
+            body {
+                display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100%;
+            background-color: black;
+            overflow: hidden;
+          }
+          canvas {
+            flex: 0;
+          }
+          * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+          }
+        </style>
+        <script src="js/phaser.min.js"></script>
+        <script src="js/Boot.js"></script>
+        <script src="js/LoadFiles.js"></script>
+        <script src="js/MenuState.js"></script>
+        <script src="js/GameState.js"></script>
+        <script src="js/Platform.js"></script>
+        <script src="js/Player.js"></script>
+		    <script src="js/Bullet.js"></script>
+    
+        <script>
+            let GameStart = new Phaser.Game(1920, 800, Phaser.CANVAS, "game");
+            GameStart.state.add("Boot", Boot);
+            GameStart.state.add("GameState", GameState);
+            GameStart.state.add("Player", Player);
+            GameStart.state.add("Platform", Platform);
+            GameStart.state.add("Bullet", Bullet);
+            GameStart.state.add("MenuState", MenuState);
+            GameStart.state.add("LoadFiles", LoadFiles);
 
-        nachalo.state.start("Boot");
-		</script>
+            GameStart.state.start("Boot");
+        </script>
     </head>
 </html>

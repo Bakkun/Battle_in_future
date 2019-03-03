@@ -23,14 +23,14 @@ class MenuState {
     let darkAndventurerText = this.phaser.add.text(1600, 590, "Jump: Arrow UP\nLeft: Arrow LEFT\nRight: Arrow RIGHT\nPunch: Numpad 1\nShoot: Numpad 2", controlTextStyle);
     darkAndventurerText.anchor.set(0.5);
 
-    let info = this.phaser.add.text(this.phaser.world.centerX - 130, 720, "At the start of the game every character has 10 hp.\nEvery hit deals 2 damage.\nGame ends when one of the characters falls from the platform\nor when the health of one of the characters becomes 0.", { font: "30px Arial", fill: "white", align: "center" });
+    let info = this.phaser.add.text(this.phaser.world.centerX - 130, 720, "At the start of the game every character has 10 hp.\nEvery hit deals 1 damage. Every arrow hit deals 2 damage.\nGame ends when one of the characters falls from the platform\nor when the health of one of the characters becomes 0.", { font: "30px Arial", fill: "white", align: "center" });
     info.anchor.set(0.5);
 
     let startButton = this.phaser.input.keyboard.addKey(Phaser.Keyboard.S);
-    startButton.onDown.add(this.actionOnClick, this);
+    startButton.onDown.add(this.StartGame, this);
   };
 
-  actionOnClick () {
+  StartGame () {
     this.phaser.state.start("GameState", true, false);
   };
 }
