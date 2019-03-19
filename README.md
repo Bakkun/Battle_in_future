@@ -1,4 +1,4 @@
-# Battle_in_future
+# Battle in future
 Simple fighting game.
 
 At the start of the game every character has 10 hp. Every hit deals 2 damage. Game ends when one of the characters falls from the platform or when the health of one of the characters becomes 0.
