@@ -57,6 +57,7 @@ class Player {
 
   update() {
     this.CheckWalking();
+    if (this.player.health <= 0) this.player.health = 0;
     this.healthText.setText("HP: " + this.player.health);
   }
 
