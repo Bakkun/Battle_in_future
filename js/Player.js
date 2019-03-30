@@ -1,14 +1,18 @@
 class Player {
-  constructor (game, xCoord, yCoord, name) {
+  constructor(game, xCoord, yCoord, name, hpXCoord, hpYCoord) {
     this.game = game;
     this.xCoord = xCoord;
     this.yCoord = yCoord;
     this.name = name;
+    this.hpXCoord = hpXCoord;
+    this.hpYCoord = hpYCoord;
 
     this.moveSpeed = 150;
+
+    this.textStyle = { font: "65px Arial", fill: "white", align: "center" };
   };
 
-  create () {
+  create() {
     this.player = this.game.add.sprite(this.xCoord, this.yCoord, this.name);
     this.player.health = 10;
     this.player.scale.setTo(2);
@@ -42,17 +46,21 @@ class Player {
       this.player.animations.play("stay");
     }, this);
 
-    shoot.onComplete.add(function() {
+    shoot.onComplete.add(function () {
       this.BulletFly();
       this.player.animations.play("stay");
     }, this);
+
+    this.healthText = this.game.phaser.add.text(this.hpXCoord, this.hpYCoord, "HP: " + this.player.health, this.textStyle);
+    this.healthText.anchor.set(0.5);
   };
 
-  update () {
+  update() {
     this.CheckWalking();
+    this.healthText.setText("HP: " + this.player.health);
   }
 
-  BindKeys ({ left, right, jump, punch, shoot }) {
+  BindKeys({ left, right, jump, punch, shoot }) {
     this.keys = this.game.phaser.input.keyboard.addKeys({ left, right, jump, punch, shoot });
 
     ["left", "right"].forEach(key => {
@@ -67,7 +75,7 @@ class Player {
     this.keys.shoot.onDown.add(() => this.Shoot());
   };
 
-  CheckWalking () {
+  CheckWalking() {
     this.player.body.velocity.x = 0
     if (!this.keys) return;
     if (this.keys.left.isDown) {
@@ -78,7 +86,7 @@ class Player {
   };
 
 
-  Walk (facing) {
+  Walk(facing) {
     this.facing = facing;
     switch (facing) {
       case "left":
@@ -96,22 +104,22 @@ class Player {
     };
   };
 
-  Jump () {
+  Jump() {
     if (!this.player.body.touching.down) return;
     this.player.animations.stop();
     this.player.animations.play("jump");
     this.player.body.velocity.y = -500;
   };
 
-  Punch () {
+  Punch() {
     this.player.animations.play("punch");
   };
 
-  Shoot () {
+  Shoot() {
     this.player.animations.play("shoot");
   };
 
-  BulletFly () {
+  BulletFly() {
     let bullet = new Bullet(this.game.phaser);
     bullet.create();
     bullet.Start(
@@ -121,16 +129,16 @@ class Player {
     this.game.bullets.push(bullet);
   };
 
-  IsDead () {
+  IsDead() {
     let style = { font: "65px Arial", fill: "black", align: "center" };
-    if ((this.player.position.x <= 325 || this.player.position.x >= 1380) && this.player.position.y >= 722){
+    if ((this.player.position.x <= 325 || this.player.position.x >= 1380) && this.player.position.y >= 722) {
       let textFell = this.game.phaser.add.text(this.game.phaser.world.centerX, 100, this.myName + " fell", style);
       textFell.anchor.set(0.5);
       this.player.kill();
       this.game.phaser.input.enabled = false;
       return true;
     };
-    if(this.player.health <= 0) {
+    if (this.player.health <= 0) {
       this.player.kill();
       let textDead = this.game.phaser.add.text(this.game.phaser.world.centerX, 100, this.myName + " is dead", style);
       textDead.anchor.set(0.5);

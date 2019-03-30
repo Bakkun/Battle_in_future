@@ -2,8 +2,8 @@ class GameState {
   constructor(phaser) {
     this.phaser = phaser;
     this.players = [];
-    this.players.push(new Player(this, 400, 385, 'Light'));
-    this.players.push(new Player(this, 1500, 475, 'Dark'));
+    this.players.push(new Player(this, 400, 385, 'Light', 100, 50));
+    this.players.push(new Player(this, 1500, 475, 'Dark', 1800, 50));
     this.platforms = [];
     this.platforms.push(new Platform(this, 350, 768, 3, 0.08));
     this.platforms.push(new Platform(this, 350, 688, 0.5, 0.2));
